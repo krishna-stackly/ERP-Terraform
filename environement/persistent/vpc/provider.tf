@@ -9,8 +9,8 @@ terraform {
   }
 
   backend "s3" {
-    bucket       = "YOUR-TERRAFORM-STATE-BUCKET"
-    key          = "devops-platform/network/terraform.tfstate"
+    bucket       = "terraform-backend-state-ecs"
+    key          = "devops-platform/network/vpc/terraform.tfstate"
     region       = "us-east-1"
     encrypt      = true
     use_lockfile = true
