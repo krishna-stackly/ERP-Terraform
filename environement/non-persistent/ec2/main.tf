@@ -1,79 +1,92 @@
 ############################################
-# Application SG
+# Application EC2
 ############################################
 
-resource "aws_security_group" "app" {
-  name        = "${var.project_name}-${var.environment}-app-sg"
-  description = "Application EC2 security group"
+module "app" {
 
-  vpc_id = module.vpc.vpc_id
+  source = "../../../modules/ec2/aws"
 
-  tags = merge(
-    var.common_tags,
-    {
-      Name = "${var.project_name}-${var.environment}-app-sg"
-    }
-  )
-}
-
-
-############################################
-# HTTP
-############################################
-
-resource "aws_vpc_security_group_ingress_rule" "app_http" {
-  security_group_id = aws_security_group.app.id
-
-  cidr_ipv4 = "0.0.0.0/0"
-
-  from_port   = 80
-  to_port     = 80
-  ip_protocol = "tcp"
-}
-
-
-############################################
-# Outbound
-############################################
-
-resource "aws_vpc_security_group_egress_rule" "app" {
-  security_group_id = aws_security_group.app.id
-
-  cidr_ipv4   = "0.0.0.0/0"
-  ip_protocol = "-1"
-}
-
-
-############################################
-# App EC2
-############################################
-
-module "app_ec2" {
-  source = "../modules/ec2"
+  ############################################
+  # Identity
+  ############################################
 
   name = "${var.project_name}-${var.environment}-app"
 
-  ami_id        = var.ami_id
-  instance_type = var.app_instance_type
+  project_name = var.project_name
 
-  subnet_id = module.vpc.public_subnet_ids[0]
+  environment = var.environment
 
-  security_group_ids = [
-    aws_security_group.app.id
-  ]
+  poc_name = var.poc_name
+
+
+  ############################################
+  # EC2
+  ############################################
+
+  ami_id = var.ami_id
+
+  instance_type = var.instance_type
+
+
+  ############################################
+  # Networking
+  ############################################
+
+  vpc_id = local.vpc_id
+
+  subnet_id = local.public_subnet_ids[0]
 
   associate_public_ip_address = true
 
-  root_volume_size = var.app_volume_size
 
-  user_data = file("${path.module}/scripts/app.sh")
+  ############################################
+  # IAM
+  ############################################
+
+  iam_instance_profile = var.iam_instance_profile
+
+
+  ############################################
+  # Storage
+  ############################################
+
+  root_volume_size = var.root_volume_size
+
+  root_volume_type = "gp3"
+
+
+  ############################################
+  # Security Group
+  ############################################
+
+  create_security_group = true
+
+  http_ingress_cidr = var.http_ingress_cidr
+
+  enable_http = true
+
+  enable_https = false
+
+
+  ############################################
+  # Bootstrap
+  ############################################
+
+  user_data = file(
+    "${path.module}/scripts/app.sh"
+  )
+
+  user_data_replace_on_change = true
+
+
+  ############################################
+  # Tags
+  ############################################
 
   common_tags = var.common_tags
 
   additional_tags = {
-    Project     = var.project_name
-    Environment = var.environment
-    Role        = "Application"
-    Lifecycle   = "Ephemeral"
+    Role      = "Application"
+    Lifecycle = "Ephemeral"
   }
 }

@@ -23,6 +23,7 @@ module "database" {
     {
       Role      = "Database"
       Lifecycle = "Persistent"
+      purpose = "ERP"
     }
   )
 }
