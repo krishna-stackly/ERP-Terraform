@@ -63,19 +63,19 @@ variable "instance_type" {
 # Networking
 ############################################
 
-variable "vpc_id" {
+# variable "vpc_id" {
 
-  description = "VPC ID"
+#   description = "VPC ID"
 
-  type = string
-}
+#   type = string
+# }
 
-variable "subnet_id" {
+# variable "subnet_id" {
 
-  description = "Subnet ID for application EC2"
+#   description = "Subnet ID for application EC2"
 
-  type = string
-}
+#   type = string
+# }
 
 
 ############################################
