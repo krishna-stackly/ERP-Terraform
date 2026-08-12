@@ -4,7 +4,7 @@
 
 module "app" {
 
-  source = "../../../modules/ec2/aws"
+  source = "git::https://github.com/krishna-stackly/ERP-Terraform.git//modules/ec2"
 
   ############################################
   # Identity
