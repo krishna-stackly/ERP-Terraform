@@ -15,7 +15,7 @@ resource "aws_instance" "this" {
 
   vpc_security_group_ids = concat(
     var.security_group_ids,
-    var.create_security_group ? [aws_security_group.app[0].id] : []
+    [aws_security_group.app.id]
   )
 
   ############################################
@@ -69,8 +69,7 @@ resource "aws_instance" "this" {
   metadata_options {
 
     http_endpoint = "enabled"
-
-    http_tokens = "required"
+    http_tokens   = "required"
   }
 
   ############################################

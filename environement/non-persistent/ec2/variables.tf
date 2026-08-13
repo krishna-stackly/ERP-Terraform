@@ -55,27 +55,8 @@ variable "instance_type" {
 
   type = string
 
-  default = "t3.large"
+  default = "t3.medium"
 }
-
-
-############################################
-# Networking
-############################################
-
-# variable "vpc_id" {
-
-#   description = "VPC ID"
-
-#   type = string
-# }
-
-# variable "subnet_id" {
-
-#   description = "Subnet ID for application EC2"
-
-#   type = string
-# }
 
 
 ############################################
@@ -84,7 +65,7 @@ variable "instance_type" {
 
 variable "iam_instance_profile" {
 
-  description = "IAM instance profile"
+  description = "IAM instance profile attached to EC2"
 
   type = string
 
@@ -112,7 +93,7 @@ variable "root_volume_size" {
 
 variable "http_ingress_cidr" {
 
-  description = "CIDR allowed to access application"
+  description = "CIDR allowed to access HTTP"
 
   type = string
 

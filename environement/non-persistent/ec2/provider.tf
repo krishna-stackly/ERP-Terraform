@@ -16,7 +16,7 @@ terraform {
 
     bucket = "terraform-backend-state-ecs"
 
-    key = "projects/{{var.project_name}}/{{var.environment}}/ec2/terraform.tfstate"
+    key = "devops-platform/non-persistent/erp-qa-app/terraform.tfstate"
 
     region = "us-east-1"
 

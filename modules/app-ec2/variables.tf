@@ -69,12 +69,6 @@ variable "associate_public_ip_address" {
 # Application Security Group
 ############################################
 
-variable "create_security_group" {
-  description = "Create an application security group"
-  type        = bool
-  default     = true
-}
-
 variable "http_ingress_cidr" {
   description = "CIDR allowed to access HTTP"
   type        = string
@@ -91,6 +85,12 @@ variable "enable_https" {
   description = "Allow HTTPS port 443"
   type        = bool
   default     = false
+}
+
+variable "https_ingress_cidr" {
+  description = "CIDR allowed to access HTTPS"
+  type        = string
+  default     = "0.0.0.0/0"
 }
 
 
@@ -133,7 +133,7 @@ variable "user_data" {
 }
 
 variable "user_data_replace_on_change" {
-  description = "Replace EC2 when user_data changes"
+  description = "Replace instance when user_data changes"
   type        = bool
   default     = false
 }
@@ -144,7 +144,7 @@ variable "user_data_replace_on_change" {
 ############################################
 
 variable "common_tags" {
-  description = "Additional common tags"
+  description = "Common tags"
   type        = map(string)
   default     = {}
 }
@@ -153,26 +153,4 @@ variable "additional_tags" {
   description = "Additional EC2-specific tags"
   type        = map(string)
   default     = {}
-}
-
-############################################
-# Security Group
-############################################
-
-variable "http_ingress_cidr" {
-  description = "CIDR allowed to access HTTP"
-  type        = string
-  default     = "0.0.0.0/0"
-}
-
-variable "enable_https" {
-  description = "Enable HTTPS ingress"
-  type        = bool
-  default     = false
-}
-
-variable "https_ingress_cidr" {
-  description = "CIDR allowed to access HTTPS"
-  type        = string
-  default     = "0.0.0.0/0"
 }
