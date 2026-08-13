@@ -53,7 +53,7 @@ variable "subnet_id" {
 }
 
 variable "security_group_ids" {
-  description = "Additional security groups attached to EC2"
+  description = "Additional security groups to attach to EC2"
   type        = list(string)
   default     = []
 }
@@ -133,7 +133,7 @@ variable "user_data" {
 }
 
 variable "user_data_replace_on_change" {
-  description = "Replace instance when user_data changes"
+  description = "Replace EC2 when user_data changes"
   type        = bool
   default     = false
 }

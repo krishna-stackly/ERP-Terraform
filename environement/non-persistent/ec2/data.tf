@@ -24,12 +24,17 @@ data "aws_ssm_parameter" "private_subnet_ids" {
   name = "/${var.project_name}/${var.environment}/network/private_subnet_ids"
 }
 
+data "aws_ssm_parameter" "security_group_ids" {
+  name = "/${var.project_name}/${var.environment}/app/sg-id"
+}
+
 
 ############################################
 # Convert StringList values to lists
 ############################################
 
 locals {
+  security_group_ids =  data.aws_ssm_parameter.security_group_ids.value
 
   vpc_id = data.aws_ssm_parameter.vpc_id.value
 

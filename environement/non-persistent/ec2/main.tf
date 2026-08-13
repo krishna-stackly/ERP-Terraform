@@ -2,48 +2,20 @@
 # Application EC2
 ############################################
 
-module "app_ec2" {
+resource "aws_instance" "this" {
 
-  source = "git::https://github.com/krishna-stackly/ERP-Terraform.git//modules/ec2?ref=main"
-
-
-  ############################################
-  # Identity
-  ############################################
-
-  name = "${var.project_name}-${var.environment}-app"
-
-  project_name = var.project_name
-
-  environment = var.environment
-
-  poc_name = var.poc_name
-
-
-  ############################################
-  # EC2
-  ############################################
-
-  ami_id = var.ami_id
-
+  ami           = var.ami_id
   instance_type = var.instance_type
-
-
-  ############################################
-  # Network
-  ############################################
-
-  vpc_id = local.vpc_id
-
-  subnet_id = local.public_subnet_ids[0]
-
+  subnet_id     = local.public_subnet_ids[0]
 
   ############################################
-  # Public IP
+  # Security Groups
   ############################################
 
-  associate_public_ip_address = true
-
+  vpc_security_group_ids = concat(
+    local.security_group_ids,
+    [aws_security_group.app.id]
+  )
 
   ############################################
   # IAM
@@ -51,26 +23,11 @@ module "app_ec2" {
 
   iam_instance_profile = var.iam_instance_profile
 
-
   ############################################
-  # Storage
-  ############################################
-
-  root_volume_size = var.root_volume_size
-
-  root_volume_type = "gp3"
-
-
-  ############################################
-  # Security Group
+  # Public IP
   ############################################
 
-  http_ingress_cidr = var.http_ingress_cidr
-
-  enable_http = true
-
-  enable_https = false
-
+  
 
   ############################################
   # Bootstrap
@@ -78,17 +35,54 @@ module "app_ec2" {
 
   user_data = file("app.sh")
 
-  user_data_replace_on_change = true
-
+  user_data_replace_on_change = var.user_data_replace_on_change
 
   ############################################
-  # Tags
+  # Root Volume
   ############################################
 
-  common_tags = var.common_tags
+  root_block_device {
 
-  additional_tags = {
-    Role      = "Application"
-    Lifecycle = "Ephemeral"
+    volume_size = var.root_volume_size
+    volume_type = var.root_volume_type
+
+    encrypted             = true
+    delete_on_termination = true
+
+    tags = merge(
+      var.common_tags,
+      {
+        Name        = "${var.name}-root"
+        Project     = var.project_name
+        Environment = var.environment
+        State       = "non-persistent"
+        Created_by  = var.poc_name
+      }
+    )
   }
+
+  ############################################
+  # IMDSv2
+  ############################################
+
+  metadata_options {
+    http_endpoint = "enabled"
+    http_tokens   = "required"
+  }
+
+  ############################################
+  # EC2 Tags
+  ############################################
+
+  tags = merge(
+    var.common_tags,
+    var.additional_tags,
+    {
+      Name        = var.name
+      Project     = var.project_name
+      Environment = var.environment
+      State       = "non-persistent"
+      Created_by  = var.poc_name
+    }
+  )
 }

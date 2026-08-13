@@ -3,12 +3,9 @@
 ############################################
 
 variable "aws_region" {
-
   description = "AWS region"
-
-  type = string
-
-  default = "us-east-1"
+  type        = string
+  default     = "us-east-1"
 }
 
 
@@ -17,45 +14,38 @@ variable "aws_region" {
 ############################################
 
 variable "project_name" {
-
   description = "Project name"
-
-  type = string
+  type        = string
 }
 
 variable "environment" {
-
   description = "Environment"
-
-  type = string
+  type        = string
 }
 
 variable "poc_name" {
-
   description = "Person who created the infrastructure"
-
-  type = string
+  type        = string
 }
 
+variable "name" {
+  description = "Name of the EC2 instance"
+  type        = string
+}
 
 ############################################
 # EC2
 ############################################
 
 variable "ami_id" {
-
   description = "AMI ID"
-
-  type = string
+  type        = string
 }
 
 variable "instance_type" {
-
   description = "EC2 instance type"
-
-  type = string
-
-  default = "t3.medium"
+  type        = string
+  default     = "t3.medium"
 }
 
 
@@ -64,12 +54,9 @@ variable "instance_type" {
 ############################################
 
 variable "iam_instance_profile" {
-
   description = "IAM instance profile attached to EC2"
-
-  type = string
-
-  default = null
+  type        = string
+  default     = null
 }
 
 
@@ -78,12 +65,14 @@ variable "iam_instance_profile" {
 ############################################
 
 variable "root_volume_size" {
-
   description = "Root volume size in GB"
-
-  type = number
-
-  default = 50
+  type        = number
+  default     = 50
+}
+variable "root_volume_type" {
+  description = "Root volume type"
+  type        = string
+  default     = "gp3"
 }
 
 
@@ -92,12 +81,9 @@ variable "root_volume_size" {
 ############################################
 
 variable "http_ingress_cidr" {
-
   description = "CIDR allowed to access HTTP"
-
-  type = string
-
-  default = "0.0.0.0/0"
+  type        = string
+  default     = "0.0.0.0/0"
 }
 
 
@@ -106,10 +92,19 @@ variable "http_ingress_cidr" {
 ############################################
 
 variable "common_tags" {
-
   description = "Common tags"
+  type        = map(string)
+  default     = {}
+}
 
-  type = map(string)
+variable "additional_tags" {
+  description = "Additional tags"
+  type        = map(string)
+  default     = {}
+}
 
-  default = {}
+variable "user_data_replace_on_change" {
+  description = "Whether to replace user data on change"
+  type        = bool
+  default     = true
 }
