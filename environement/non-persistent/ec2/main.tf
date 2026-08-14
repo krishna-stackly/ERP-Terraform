@@ -12,10 +12,7 @@ resource "aws_instance" "this" {
   # Security Groups
   ############################################
 
-  vpc_security_group_ids = concat(
-    local.security_group_ids,
-    [aws_security_group.app.id]
-  )
+  vpc_security_group_ids = local.security_group_ids
 
   ############################################
   # IAM

@@ -1,0 +1,3 @@
+resource "ssm_" "name" {
+  
+}

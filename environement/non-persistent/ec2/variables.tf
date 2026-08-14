@@ -26,6 +26,7 @@ variable "environment" {
 variable "poc_name" {
   description = "Person who created the infrastructure"
   type        = string
+  default     = "ERP"
 }
 
 variable "name" {
