@@ -51,6 +51,23 @@ variable "instance_type" {
 
 
 ############################################
+# Networking
+############################################
+
+variable "associate_public_ip_address" {
+  description = "Associate public IPv4 address with the EC2 instance"
+  type        = bool
+  default     = true
+}
+
+variable "additional_security_group_ids" {
+  description = "Extra security group IDs to attach alongside the module-managed app SG"
+  type        = list(string)
+  default     = []
+}
+
+
+############################################
 # IAM
 ############################################
 
@@ -81,8 +98,26 @@ variable "root_volume_type" {
 # Security
 ############################################
 
+variable "enable_http" {
+  description = "Allow HTTP port 80"
+  type        = bool
+  default     = true
+}
+
 variable "http_ingress_cidr" {
   description = "CIDR allowed to access HTTP"
+  type        = string
+  default     = "0.0.0.0/0"
+}
+
+variable "enable_https" {
+  description = "Allow HTTPS port 443"
+  type        = bool
+  default     = false
+}
+
+variable "https_ingress_cidr" {
+  description = "CIDR allowed to access HTTPS"
   type        = string
   default     = "0.0.0.0/0"
 }

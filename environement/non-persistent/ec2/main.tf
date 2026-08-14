@@ -1,18 +1,43 @@
 ############################################
-# Application EC2
+# Application EC2 (via modules/app-ec2)
 ############################################
 
-resource "aws_instance" "this" {
+module "app_ec2" {
+  source = "git::https://github.com/krishna-stackly/ERP-Terraform.git//modules/app-ec2"
 
-  ami           = var.ami_id
+  ############################################
+  # General
+  ############################################
+
+  name         = var.name
+  project_name = var.project_name
+  environment  = var.environment
+  poc_name     = var.poc_name
+
+  ############################################
+  # EC2
+  ############################################
+
+  ami_id        = var.ami_id
   instance_type = var.instance_type
-  subnet_id     = local.public_subnet_ids[0]
 
   ############################################
-  # Security Groups
+  # Networking
   ############################################
 
-  vpc_security_group_ids = local.security_group_ids
+  vpc_id                       = local.vpc_id
+  subnet_id                    = local.public_subnet_ids[0]
+  security_group_ids           = var.additional_security_group_ids
+  associate_public_ip_address  = var.associate_public_ip_address
+
+  ############################################
+  # Application Security Group
+  ############################################
+
+  enable_http         = var.enable_http
+  http_ingress_cidr   = var.http_ingress_cidr
+  enable_https        = var.enable_https
+  https_ingress_cidr  = var.https_ingress_cidr
 
   ############################################
   # IAM
@@ -21,65 +46,23 @@ resource "aws_instance" "this" {
   iam_instance_profile = var.iam_instance_profile
 
   ############################################
-  # Public IP
+  # Storage
   ############################################
 
-  
+  root_volume_size = var.root_volume_size
+  root_volume_type = var.root_volume_type
 
   ############################################
   # Bootstrap
   ############################################
 
-  user_data = file("app.sh")
-
+  user_data                   = file("${path.module}/app.sh")
   user_data_replace_on_change = var.user_data_replace_on_change
 
   ############################################
-  # Root Volume
+  # Tags
   ############################################
 
-  root_block_device {
-
-    volume_size = var.root_volume_size
-    volume_type = var.root_volume_type
-
-    encrypted             = true
-    delete_on_termination = true
-
-    tags = merge(
-      var.common_tags,
-      {
-        Name        = "${var.name}-root"
-        Project     = var.project_name
-        Environment = var.environment
-        State       = "non-persistent"
-        Created_by  = var.poc_name
-      }
-    )
-  }
-
-  ############################################
-  # IMDSv2
-  ############################################
-
-  metadata_options {
-    http_endpoint = "enabled"
-    http_tokens   = "required"
-  }
-
-  ############################################
-  # EC2 Tags
-  ############################################
-
-  tags = merge(
-    var.common_tags,
-    var.additional_tags,
-    {
-      Name        = var.name
-      Project     = var.project_name
-      Environment = var.environment
-      State       = "non-persistent"
-      Created_by  = var.poc_name
-    }
-  )
+  common_tags     = var.common_tags
+  additional_tags = var.additional_tags
 }

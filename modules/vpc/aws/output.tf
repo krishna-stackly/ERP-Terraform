@@ -58,3 +58,23 @@ output "public_subnet_ids_ssm_parameter" {
 output "private_subnet_ids_ssm_parameter" {
   value = aws_ssm_parameter.private_subnet_ids.name
 }
+
+output "vpc_cidr_block_ssm_parameter" {
+  value = aws_ssm_parameter.vpc_cidr_block.name
+}
+
+output "nat_gateway_ids_ssm_parameter" {
+  value = length(aws_ssm_parameter.nat_gateway_ids) > 0 ? aws_ssm_parameter.nat_gateway_ids[0].name : null
+}
+
+output "public_route_table_ids_ssm_parameter" {
+  value = length(aws_ssm_parameter.public_route_table_ids) > 0 ? aws_ssm_parameter.public_route_table_ids[0].name : null
+}
+
+output "private_route_table_ids_ssm_parameter" {
+  value = length(aws_ssm_parameter.private_route_table_ids) > 0 ? aws_ssm_parameter.private_route_table_ids[0].name : null
+}
+
+output "availability_zones_ssm_parameter" {
+  value = aws_ssm_parameter.availability_zones.name
+}
