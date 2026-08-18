@@ -46,12 +46,12 @@ resource "aws_ssm_parameter" "app_private_ip" {
   )
 }
 
-resource"aws_ssm_parameter" "app_private_ip" {
-  name        = "/${var.project_name}/${var.environment}/app/private-ip"
-  description = "Application EC2 private IP for ${var.project_name}-${var.environment}"
+resource"aws_ssm_parameter" "app_public_ip" {
+  name        = "/${var.project_name}/${var.environment}/app/public-ip"
+  description = "Application EC2 public IP for ${var.project_name}-${var.environment}"
 
   type  = "String"
-  value = aws_instance.this.private_ip
+  value = aws_instance.this.public_ip
 
   tags = merge(
     var.common_tags,
