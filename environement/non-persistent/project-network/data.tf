@@ -37,7 +37,4 @@ locals {
   db_private_ip   = data.aws_ssm_parameter.db_private_ip.value
 }
 
-data "aws_ssm_parameter" "app_private_ip" {
-  name = "/${var.project_name}/${var.environment}/app/private-ip"
-}
 
