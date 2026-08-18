@@ -25,3 +25,4 @@ output "db_private_ip_ssm_parameter" {
 output "db_security_group_ssm_parameter" {
   value = aws_ssm_parameter.db_security_group_id.name
 }
+
