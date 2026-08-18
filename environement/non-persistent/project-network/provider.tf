@@ -9,19 +9,16 @@ terraform {
   }
 
   backend "s3" {
-    bucket = "YOUR-TERRAFORM-STATE-BUCKET"
-
-    key = "projects/erp/qa/terraform.tfstate"
-
+    bucket       = "terraform-backend-state-ecs"
+    key          = "erp/non-persistent/project-network/terraform.tfstate"
     region       = "us-east-1"
     encrypt      = true
     use_lockfile = true
   }
 }
 
-
 provider "aws" {
-  region = "us-east-1"
+  region = var.aws_region
 
   default_tags {
     tags = {

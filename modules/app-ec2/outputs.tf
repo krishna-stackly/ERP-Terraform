@@ -56,3 +56,8 @@ output "security_group_ssm_parameter" {
   description = "SSM parameter containing application security group ID"
   value       = aws_ssm_parameter.app_security_group_id.name
 }
+
+output "app_private_ip_ssm_parameter" {
+  description = "SSM parameter containing application EC2 private IP"
+  value       = aws_ssm_parameter.app_private_ip.name
+}

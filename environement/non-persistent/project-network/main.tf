@@ -1,23 +1,33 @@
 module "project_network" {
-  source = "../../../modules/project-network"
+  source = "git::https://github.com/krishna-stackly/ERP-Terraform.git//modules/project-network?ref=main"
+  # once you cut a release tag, switch to: ?ref=project-network-v1.0.0
 
+  ############################################
+  # General
+  ############################################
   project_name = var.project_name
   environment  = var.environment
+  common_tags  = var.common_tags
 
-  vpc_id = var.vpc_id
+  ############################################
+  # VPC
+  ############################################
+  vpc_id = local.vpc_id
 
-  database_security_group_id = var.database_security_group_id
-  database_private_ip        = var.database_private_ip
+  ############################################
+  # Database DNS
+  ############################################
+  database_private_ip = local.db_private_ip
+  database_dns_name    = var.database_dns_name
 
-  database_port = var.database_port
+  ############################################
+  # Application DNS
+  ############################################
+  application_private_ip = local.app_private_ip
+  application_dns_name   = var.application_dns_name
 
-  application_private_ip = var.application_private_ip
-
+  ############################################
+  # Route53
+  ############################################
   private_zone_name = var.private_zone_name
-  database_dns_name = var.database_dns_name
-
-  http_ingress_cidr = var.http_ingress_cidr
-  enable_https      = var.enable_https
-
-  common_tags = var.common_tags
 }

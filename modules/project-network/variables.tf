@@ -30,33 +30,34 @@ variable "vpc_id" {
 
 
 ############################################
-# Database
+# Database DNS
 ############################################
-
-variable "database_security_group_id" {
-  description = "Security group ID of persistent shared DB"
-  type        = string
-}
 
 variable "database_private_ip" {
   description = "Private IP of persistent shared DB EC2"
   type        = string
 }
 
-variable "database_port" {
-  description = "Database port"
-  type        = number
-  default     = 3306
+variable "database_dns_name" {
+  description = "Internal database hostname"
+  type        = string
+  default     = "mysql.internal"
 }
 
 
 ############################################
-# Application
+# Application DNS
 ############################################
 
 variable "application_private_ip" {
-  description = "Private IP of application EC2"
+  description = "Private IP of the current application EC2"
   type        = string
+}
+
+variable "application_dns_name" {
+  description = "Internal application hostname"
+  type        = string
+  default     = "app.internal"
 }
 
 
@@ -68,33 +69,4 @@ variable "private_zone_name" {
   description = "Private hosted zone name"
   type        = string
   default     = "internal"
-}
-
-variable "database_dns_name" {
-  description = "Internal database hostname"
-  type        = string
-  default     = "mysql-db.internal"
-}
-
-variable "application_dns_name" {
-  description = "Internal application hostname"
-  type        = string
-  default     = "app.internal"
-}
-
-
-############################################
-# Ingress
-############################################
-
-variable "http_ingress_cidr" {
-  description = "CIDR allowed to access application HTTP/HTTPS"
-  type        = string
-  default     = "0.0.0.0/0"
-}
-
-variable "enable_https" {
-  description = "Enable HTTPS ingress"
-  type        = bool
-  default     = false
 }
