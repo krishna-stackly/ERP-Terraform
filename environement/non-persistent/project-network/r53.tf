@@ -6,6 +6,7 @@ resource "aws_route53_record" "app" {
   ttl  = 60
 
   records = [
-    module.app.private_ip
+    local.app_private_ip
   ]
 }
+
