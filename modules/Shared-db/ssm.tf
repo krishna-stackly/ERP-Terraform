@@ -24,3 +24,17 @@ resource "aws_ssm_parameter" "db_private_ip" {
 # Database Security Group ID -> SSM
 ############################################
 
+resource "aws_ssm_parameter" "db_security_group_id" {
+  name        = "/${var.project_name}/${var.environment}/database/sg-id"
+  description = "Database security group ID for ${var.name}"
+  type        = "String"
+
+  value = aws_security_group.database.id
+
+  tags = merge(
+    var.common_tags,
+    {
+      Component = "Database"
+    }
+  )
+}
