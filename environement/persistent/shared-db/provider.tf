@@ -9,17 +9,16 @@ terraform {
   }
 
   backend "s3" {
-    bucket       = "YOUR-TERRAFORM-STATE-BUCKET"
-    key          = "devops-platform/dev/terraform.tfstate"
+    bucket       = "terraform-backend-state-ecs"
+    key          = "erp/persistent/shared-db/terraform.tfstate"
     region       = "us-east-1"
     encrypt      = true
     use_lockfile = true
   }
 }
 
-
 provider "aws" {
-  region = "us-east-1"
+  region = var.aws_region
 
   default_tags {
     tags = {

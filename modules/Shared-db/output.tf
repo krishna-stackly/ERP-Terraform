@@ -17,3 +17,11 @@ output "data_volume_id" {
 output "availability_zone" {
   value = aws_instance.database.availability_zone
 }
+
+output "db_private_ip_ssm_parameter" {
+  value = aws_ssm_parameter.db_private_ip.name
+}
+
+output "db_security_group_ssm_parameter" {
+  value = aws_ssm_parameter.db_security_group_id.name
+}

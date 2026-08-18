@@ -20,14 +20,17 @@ resource "aws_instance" "database" {
 
   root_block_device {
     volume_size           = var.root_volume_size
-    volume_type           = "gp3"
-    encrypted             = true
-    delete_on_termination = true
+    volume_type            = "gp3"
+    encrypted              = true
+    delete_on_termination  = true
 
     tags = merge(
       var.common_tags,
       {
-        Name = "${var.name}-root"
+        Name        = "${var.name}-root"
+        Project     = var.project_name
+        Environment = var.environment
+        Created_by  = var.poc_name
       }
     )
   }
@@ -40,9 +43,12 @@ resource "aws_instance" "database" {
   tags = merge(
     var.common_tags,
     {
-      Name      = var.name
-      Role      = "Database"
-      Lifecycle = "Persistent"
+      Name        = var.name
+      Role        = "Database"
+      Lifecycle   = "Persistent"
+      Project     = var.project_name
+      Environment = var.environment
+      Created_by  = var.poc_name
     }
   )
 }
@@ -63,9 +69,12 @@ resource "aws_ebs_volume" "database_data" {
   tags = merge(
     var.common_tags,
     {
-      Name      = "${var.name}-data"
-      Role      = "Database-Data"
-      Lifecycle = "Persistent"
+      Name        = "${var.name}-data"
+      Role        = "Database-Data"
+      Lifecycle   = "Persistent"
+      Project     = var.project_name
+      Environment = var.environment
+      Created_by  = var.poc_name
     }
   )
 
@@ -82,7 +91,7 @@ resource "aws_ebs_volume" "database_data" {
 resource "aws_volume_attachment" "database_data" {
   device_name = var.data_device_name
 
-  volume_id = aws_ebs_volume.database_data.id
+  volume_id   = aws_ebs_volume.database_data.id
   instance_id = aws_instance.database.id
 
   stop_instance_before_detaching = true

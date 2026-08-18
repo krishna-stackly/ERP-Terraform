@@ -1,24 +1,30 @@
 ############################################
-# General
+# AWS
 ############################################
 
-variable "name" {
-  description = "Database EC2 name"
+variable "aws_region" {
+  description = "AWS region"
   type        = string
+  default     = "us-east-1"
 }
 
+
+############################################
+# Project
+############################################
+
 variable "project_name" {
-  description = "Project name used for tagging and SSM paths"
+  description = "Project name"
   type        = string
 }
 
 variable "environment" {
-  description = "Environment name"
+  description = "Environment"
   type        = string
 }
 
 variable "poc_name" {
-  description = "Person or owner who created the resource"
+  description = "Person who created the infrastructure"
   type        = string
   default     = "ERP"
 }
@@ -29,11 +35,11 @@ variable "poc_name" {
 ############################################
 
 variable "ami_id" {
-  description = "Database EC2 AMI"
+  description = "Database AMI ID"
   type        = string
 }
 
-variable "instance_type" {
+variable "db_instance_type" {
   description = "Database instance type"
   type        = string
   default     = "t3.large"
@@ -44,20 +50,10 @@ variable "instance_type" {
 # Networking
 ############################################
 
-variable "vpc_id" {
-  description = "VPC ID"
-  type        = string
-}
-
-variable "subnet_id" {
-  description = "Private subnet for database"
-  type        = string
-}
-
-variable "allowed_security_group_ids" {
-  description = "Security groups allowed to connect to MySQL (port 3306)"
-  type        = list(string)
-  default     = []
+variable "db_subnet_index" {
+  description = "Index into the private subnet list where the DB should live"
+  type        = number
+  default     = 1
 }
 
 
@@ -65,22 +61,16 @@ variable "allowed_security_group_ids" {
 # Storage
 ############################################
 
-variable "root_volume_size" {
-  description = "OS/root EBS size"
+variable "db_root_volume_size" {
+  description = "Root volume size (GB)"
   type        = number
   default     = 30
 }
 
-variable "data_volume_size" {
-  description = "Persistent database data volume size"
+variable "db_data_volume_size" {
+  description = "Data volume size (GB)"
   type        = number
   default     = 100
-}
-
-variable "data_device_name" {
-  description = "EBS device name"
-  type        = string
-  default     = "/dev/sdf"
 }
 
 

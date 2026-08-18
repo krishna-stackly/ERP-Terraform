@@ -1,15 +1,47 @@
 ############################################
-# Application
+# AWS
 ############################################
 
-app_instance_type = "t3.large"
-app_volume_size   = 50
+aws_region = "us-east-1"
 
 
 ############################################
-# Shared Database
+# Project
 ############################################
 
-db_instance_type     = "t3.large"
-db_root_volume_size  = 30
-db_data_volume_size  = 100
+project_name = "erp"
+environment  = "dev"
+poc_name     = "Krishna"
+
+
+############################################
+# EC2
+############################################
+
+ami_id           = "ami-0220d79f3f480ecf5" # replace with your actual AMI ID
+db_instance_type = "t3.micro"
+
+
+############################################
+# Networking
+############################################
+
+db_subnet_index = 1
+
+
+############################################
+# Storage
+############################################
+
+db_root_volume_size = 30
+db_data_volume_size = 100
+
+
+############################################
+# Tags
+############################################
+
+common_tags = {
+  Platform = "ERP-Dev"
+  Owner    = "DevOps"
+}
