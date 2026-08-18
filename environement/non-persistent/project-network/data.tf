@@ -35,7 +35,6 @@ locals {
   vpc_id          = data.aws_ssm_parameter.vpc_id.value
   app_private_ip  = data.aws_ssm_parameter.app_private_ip.value
   db_private_ip   = data.aws_ssm_parameter.db_private_ip.value
-
 }
 
 data "aws_ssm_parameter" "app_private_ip" {
