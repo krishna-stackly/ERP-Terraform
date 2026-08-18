@@ -9,7 +9,7 @@ aws_region = "us-east-1"
 # Project
 ############################################
 
-project_name = "devops-platform"
+project_name = "erp"
 environment  = "dev"
 
 
