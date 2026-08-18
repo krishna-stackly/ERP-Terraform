@@ -34,6 +34,7 @@ variable "name" {
   type        = string
 }
 
+
 ############################################
 # EC2
 ############################################
@@ -87,6 +88,7 @@ variable "root_volume_size" {
   type        = number
   default     = 50
 }
+
 variable "root_volume_type" {
   description = "Root volume type"
   type        = string

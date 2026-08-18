@@ -3,7 +3,6 @@
 ############################################
 
 resource "aws_instance" "this" {
-
   ami           = var.ami_id
   instance_type = var.instance_type
 
@@ -12,7 +11,6 @@ resource "aws_instance" "this" {
   ############################################
   # Security Groups
   ############################################
-
   vpc_security_group_ids = concat(
     var.security_group_ids,
     [aws_security_group.app.id]
@@ -21,29 +19,23 @@ resource "aws_instance" "this" {
   ############################################
   # IAM
   ############################################
-
   iam_instance_profile = var.iam_instance_profile
 
   ############################################
   # Public IP
   ############################################
-
   associate_public_ip_address = var.associate_public_ip_address
 
   ############################################
   # Bootstrap
   ############################################
-
-  user_data = var.user_data
-
+  user_data                   = var.user_data
   user_data_replace_on_change = var.user_data_replace_on_change
 
   ############################################
   # Root Volume
   ############################################
-
   root_block_device {
-
     volume_size = var.root_volume_size
     volume_type = var.root_volume_type
 
@@ -65,9 +57,7 @@ resource "aws_instance" "this" {
   ############################################
   # IMDSv2
   ############################################
-
   metadata_options {
-
     http_endpoint = "enabled"
     http_tokens   = "required"
   }
@@ -75,7 +65,6 @@ resource "aws_instance" "this" {
   ############################################
   # EC2 Tags
   ############################################
-
   tags = merge(
     var.common_tags,
     var.additional_tags,
