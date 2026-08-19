@@ -29,21 +29,35 @@ variable "jenkins_subnet_id" {
 }
 
 variable "agent_subnet_id" {
-  description = "Private subnet for Jenkins agent"
+  description = "Public subnet for Jenkins agent"
   type        = string
 }
 
 ############################################
-# Route53
+# SSH / Access
 ############################################
 
-variable "private_zone_id" {
-  description = "Private Route53 Hosted Zone ID"
+variable "key_name" {
+  description = "Existing EC2 key pair name used for SSH access to both the controller and the agent"
   type        = string
 }
 
-variable "private_zone_name" {
-  description = "Private Hosted Zone Name"
+variable "admin_ssh_cidr" {
+  description = "CIDR blocks allowed to SSH directly into the Jenkins controller and agent, and to reach the Jenkins UI (port 8080) on the controller"
+  type        = list(string)
+}
+
+############################################
+# Route53 (public zone)
+############################################
+
+variable "public_zone_id" {
+  description = "Existing public Route53 Hosted Zone ID to create Jenkins DNS records in"
+  type        = string
+}
+
+variable "domain_name" {
+  description = "Root domain name for the public hosted zone (e.g. kriiishamtic.fun)"
   type        = string
 }
 

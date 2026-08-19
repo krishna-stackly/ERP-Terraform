@@ -3,7 +3,8 @@
 ############################################
 
 variable "aws_region" {
-  type = string
+  type    = string
+  default = "us-east-1"
 }
 
 ############################################
@@ -59,15 +60,47 @@ variable "agent_volume_size" {
 }
 
 ############################################
-# Route53
+# Networking
 ############################################
 
-variable "private_zone_id" {
-  type = string
+variable "jenkins_subnet_index" {
+  description = "Index into the public_subnet_ids list to place the Jenkins controller in"
+  type        = number
+  default     = 0
 }
 
-variable "private_zone_name" {
-  type = string
+variable "agent_subnet_index" {
+  description = "Index into the public_subnet_ids list to place the Jenkins agent in"
+  type        = number
+  default     = 0
+}
+
+############################################
+# SSH / Access
+############################################
+
+variable "key_name" {
+  description = "Existing EC2 key pair name for SSH access to both instances"
+  type        = string
+}
+
+variable "admin_ssh_cidr" {
+  description = "CIDR blocks allowed to SSH into the instances and reach the Jenkins UI (port 8080)"
+  type        = list(string)
+}
+
+############################################
+# Route53 (public zone)
+############################################
+
+variable "public_zone_id" {
+  description = "Existing public Route53 Hosted Zone ID"
+  type        = string
+}
+
+variable "domain_name" {
+  description = "Root domain name of the public hosted zone"
+  type        = string
 }
 
 ############################################

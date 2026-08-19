@@ -10,7 +10,7 @@ terraform {
 
   backend "s3" {
     bucket       = "terraform-backend-state-ecs"
-    key          = "devops-platform/network/terraform.tfstate"
+    key          = "erp/persistent/jenkins/terraform.tfstate"
     region       = "us-east-1"
     encrypt      = true
     use_lockfile = true
