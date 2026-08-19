@@ -51,6 +51,9 @@ resource "aws_instance" "database" {
       Created_by  = var.poc_name
     }
   )
+  depends_on = [
+    aws_security_group.database
+  ]
 }
 
 
