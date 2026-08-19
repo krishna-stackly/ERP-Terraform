@@ -37,5 +37,5 @@ locals {
     data.aws_ssm_parameter.private_subnet_ids.value
   )
 
-  app_security_group_id = data.aws_ssm_parameter.app_security_group_id.value
+  # app_security_group_id = data.aws_ssm_parameter.app_security_group_id.value
 }
