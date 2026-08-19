@@ -25,7 +25,7 @@ module "database" {
   subnet_id = local.private_subnet_ids[var.db_subnet_index]
 
   allowed_security_group_ids = [
-    local.app_security_group_id
+    local.db_security_group_id
   ]
 
   ############################################
