@@ -54,12 +54,6 @@ variable "subnet_id" {
   type        = string
 }
 
-variable "allowed_security_group_ids" {
-  description = "Security groups allowed to connect to MySQL (port 3306)"
-  type        = list(string)
-  default     = []
-}
-
 
 ############################################
 # Storage

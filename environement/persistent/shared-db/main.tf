@@ -24,10 +24,6 @@ module "database" {
   vpc_id    = local.vpc_id
   subnet_id = local.private_subnet_ids[var.db_subnet_index]
 
-  allowed_security_group_ids = [
-    local.db_security_group_id
-  ]
-
   ############################################
   # Storage
   ############################################
