@@ -94,4 +94,3 @@ resource "aws_instance" "agent" {
     }
   )
 }
-
