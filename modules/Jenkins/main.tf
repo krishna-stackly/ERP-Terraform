@@ -16,7 +16,7 @@ resource "aws_instance" "jenkins" {
 
   iam_instance_profile = aws_iam_instance_profile.jenkins.name
 
-  user_data                   = file("jenkins.sh")
+  user_data = file("${path.module}/jenkins.sh")
   user_data_replace_on_change = true
 
   root_block_device {
@@ -65,7 +65,7 @@ resource "aws_instance" "agent" {
 
   iam_instance_profile = aws_iam_instance_profile.agent.name
 
-  user_data                   = file("jenkins-agent.sh")
+  user_data = file("${path.module}/jenkins-agent.sh")
   user_data_replace_on_change = true
 
   root_block_device {
