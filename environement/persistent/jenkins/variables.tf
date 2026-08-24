@@ -31,14 +31,14 @@ variable "controller_instance_type" {
 
   type = string
 
-  default = "t3.medium"
+  default = "t3.micro"
 }
 
 variable "agent_instance_type" {
 
   type = string
 
-  default = "t3.large"
+  default = "t3.micro"
 }
 
 ############################################
