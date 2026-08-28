@@ -39,7 +39,6 @@ This deployment pipeline runs only from the main branch.
 
 ```
 currentBuild.result = 'NOT_BUILT'
-
 return
 ```
 
@@ -52,8 +51,8 @@ return
 *
 * Static configuration is passed through the config map.
 *
-* ENVIRONMENT and VERSION are Jenkins build parameters created
-* inside the shared library.
+* VERSION and ENVIRONMENT are Jenkins build parameters
+* created and consumed inside the shared library.
 * ============================================================
   */
 
@@ -67,7 +66,6 @@ erpPipeline(
  */
 
 accountId: '699975678958',
-
 awsRegion: 'us-east-1',
 
 
@@ -76,12 +74,11 @@ awsRegion: 'us-east-1',
  * TERRAFORM / INFRASTRUCTURE CONFIGURATION
  *
  * These values must exactly match the Terraform-created
- * EC2 tags.
+ * resource tags.
  * ========================================================
  */
 
 projectName: 'erp',
-
 pocName: 'Krishna',
 
 
@@ -89,7 +86,8 @@ pocName: 'Krishna',
  * ========================================================
  * JENKINS AWS CREDENTIAL
  *
- * Must match the Credential ID configured in Jenkins.
+ * Must exactly match the Credential ID configured
+ * in Jenkins.
  * ========================================================
  */
 
@@ -107,10 +105,8 @@ awsCredentials: 'aws-erp',
  */
 
 environments: [
-
     'Dev': 'Dev',
-
-    'QA': 'QA'
+    'QA' : 'QA'
 ]
 ```
 
