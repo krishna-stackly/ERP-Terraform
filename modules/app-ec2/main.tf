@@ -74,6 +74,8 @@ resource "aws_instance" "this" {
       Environment = var.environment
       State       = "non-persistent"
       Created_by  = var.poc_name
+      component   = "app"
+      
     }
   )
 }

@@ -49,6 +49,7 @@ resource "aws_instance" "database" {
       Project     = var.project_name
       Environment = var.environment
       Created_by  = var.poc_name
+      component   = "database"
     }
   )
   depends_on = [
@@ -73,8 +74,8 @@ resource "aws_ebs_volume" "database_data" {
     var.common_tags,
     {
       Name        = "${var.name}-data"
-      Role        = "Database-Data"
-      Lifecycle   = "Persistent"
+      Component   = "Database"
+      State       = "Persistent"
       Project     = var.project_name
       Environment = var.environment
       Created_by  = var.poc_name
