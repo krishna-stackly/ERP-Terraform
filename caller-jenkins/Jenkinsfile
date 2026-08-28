@@ -14,14 +14,13 @@
  * BRANCH VALIDATION
  *
  * Execute this deployment pipeline only when running
- * from the application's main branch.
+ * from the main branch.
  * ============================================================
  */
 
 if (env.BRANCH_NAME != 'main') {
 
     echo """
-
 ==================================================
 PIPELINE NOT EXECUTED
 ==================================================
@@ -44,10 +43,8 @@ This deployment pipeline runs only from the main branch.
  * ============================================================
  * CALL ERP SHARED PIPELINE
  *
- * Static configuration is passed from this caller.
- *
- * VERSION and ENVIRONMENT parameters are created
- * by the shared library.
+ * VERSION and ENVIRONMENT are created inside the
+ * shared library as Jenkins parameters.
  * ============================================================
  */
 
@@ -66,10 +63,9 @@ erpPipeline(
 
     /*
      * ========================================================
-     * TERRAFORM / INFRASTRUCTURE CONFIGURATION
+     * PROJECT CONFIGURATION
      *
-     * These values are used together with the selected
-     * environment to discover AWS infrastructure.
+     * These values must match the EC2 resource tags.
      * ========================================================
      */
 
@@ -80,9 +76,18 @@ erpPipeline(
 
     /*
      * ========================================================
-     * JENKINS AWS CREDENTIAL
+     * JENKINS AGENT
+     * ========================================================
+     */
+
+    agentLabel: 'jenkins-agent-007',
+
+
+    /*
+     * ========================================================
+     * AWS CREDENTIALS
      *
-     * This must exactly match the Jenkins Credential ID.
+     * Jenkins Credential ID.
      * ========================================================
      */
 
@@ -98,8 +103,11 @@ erpPipeline(
      * Dev
      * QA
      *
-     * The shared library converts the selected value to
-     * lowercase for AWS Terraform tag discovery.
+     * The shared library converts these to lowercase
+     * when querying AWS tags:
+     *
+     * Dev -> dev
+     * QA  -> qa
      * ========================================================
      */
 
@@ -108,5 +116,7 @@ erpPipeline(
         'Dev': 'Dev',
 
         'QA': 'QA'
+
     ]
+
 )
