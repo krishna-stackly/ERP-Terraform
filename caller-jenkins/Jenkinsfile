@@ -1,0 +1,117 @@
+/*
+
+* ============================================================
+* LOAD SHARED LIBRARY
+*
+* Always use the main branch of the shared library.
+* ============================================================
+  */
+
+@Library('erp-shared-library@main') _
+
+/*
+
+* ============================================================
+* BRANCH VALIDATION
+*
+* Execute the deployment pipeline only when this Jenkinsfile
+* is running from the application's main branch.
+* ============================================================
+  */
+
+if (env.BRANCH_NAME != 'main') {
+
+```
+echo """
+```
+
+==================================================
+PIPELINE NOT EXECUTED
+=====================
+
+Current Branch : ${env.BRANCH_NAME}
+Allowed Branch : main
+
+This deployment pipeline runs only from the main branch.
+
+==================================================
+"""
+
+```
+currentBuild.result = 'NOT_BUILT'
+
+return
+```
+
+}
+
+/*
+
+* ============================================================
+* CALL ERP SHARED PIPELINE
+*
+* Static configuration is passed through the config map.
+*
+* ENVIRONMENT and VERSION are Jenkins build parameters created
+* inside the shared library.
+* ============================================================
+  */
+
+erpPipeline(
+
+```
+/*
+ * ========================================================
+ * AWS CONFIGURATION
+ * ========================================================
+ */
+
+accountId: 'YOUR_AWS_ACCOUNT_ID',
+
+awsRegion: 'YOUR_AWS_REGION',
+
+
+/*
+ * ========================================================
+ * TERRAFORM / INFRASTRUCTURE CONFIGURATION
+ *
+ * These values must exactly match the Terraform-created
+ * EC2 tags.
+ * ========================================================
+ */
+
+projectName: 'YOUR_PROJECT_NAME',
+
+pocName: 'YOUR_POC_NAME',
+
+
+/*
+ * ========================================================
+ * JENKINS AWS CREDENTIAL
+ *
+ * Must match the Credential ID configured in Jenkins.
+ * ========================================================
+ */
+
+awsCredentials: 'aws-erp',
+
+
+/*
+ * ========================================================
+ * DEPLOYMENT ENVIRONMENTS
+ *
+ * These become the ENVIRONMENT Jenkins parameter options.
+ *
+ * They must match the Terraform Environment tag values.
+ * ========================================================
+ */
+
+environments: [
+
+    'Dev': 'Dev',
+
+    'QA': 'QA'
+]
+```
+
+)
