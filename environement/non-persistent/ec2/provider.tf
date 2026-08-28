@@ -9,7 +9,7 @@ terraform {
   }
 
   backend "s3" {
-    bucket       = "terraform-backend-state-ecs"
+    bucket       = "project-k-stackly"
     key          = "erp/non-persistent/app-ec2/terraform.tfstate"
     region       = "us-east-1"
     encrypt      = true
