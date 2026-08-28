@@ -66,9 +66,9 @@ erpPipeline(
  * ========================================================
  */
 
-accountId: 'YOUR_AWS_ACCOUNT_ID',
+accountId: '699975678958',
 
-awsRegion: 'YOUR_AWS_REGION',
+awsRegion: 'us-east-1',
 
 
 /*
@@ -80,9 +80,9 @@ awsRegion: 'YOUR_AWS_REGION',
  * ========================================================
  */
 
-projectName: 'YOUR_PROJECT_NAME',
+projectName: 'erp',
 
-pocName: 'YOUR_POC_NAME',
+pocName: 'Krishna',
 
 
 /*
