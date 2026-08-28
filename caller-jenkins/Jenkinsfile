@@ -21,9 +21,9 @@
 
 if (env.BRANCH_NAME != 'main') {
 
-```
+
 echo """
-```
+
 
 ==================================================
 PIPELINE NOT EXECUTED
@@ -37,10 +37,10 @@ This deployment pipeline runs only from the main branch.
 ==================================================
 """
 
-```
+
 currentBuild.result = 'NOT_BUILT'
 return
-```
+
 
 }
 
@@ -58,7 +58,7 @@ return
 
 erpPipeline(
 
-```
+
 /*
  * ========================================================
  * AWS CONFIGURATION
@@ -108,6 +108,6 @@ environments: [
     'Dev': 'Dev',
     'QA' : 'QA'
 ]
-```
+
 
 )
