@@ -1,111 +1,54 @@
 @Library('erp-shared-library@main') _
 
-/*
-
-* ============================================================
-* BRANCH VALIDATION
-* ============================================================
-  */
 
 if (env.BRANCH_NAME != 'main') {
 
-
-echo """
-
-
+    echo """
 ==================================================
 PIPELINE NOT EXECUTED
-=====================
+==================================================
 
 Current Branch : ${env.BRANCH_NAME}
 Allowed Branch : main
 
-This deployment pipeline runs only from the main branch.
-
 ==================================================
 """
 
+    currentBuild.result = 'NOT_BUILT'
 
-currentBuild.result = 'NOT_BUILT'
-return
-
-
+    return
 }
 
-/*
-
-* ============================================================
-* CALL ERP SHARED PIPELINE
-* ============================================================
-  */
 
 erpPipeline(
 
+    accountId: '699975678958',
 
-/*
- * ========================================================
- * AWS CONFIGURATION
- * ========================================================
- */
+    awsRegion: 'us-east-1',
 
-accountId: '699975678958',
+    projectName: 'erp',
 
-awsRegion: 'us-east-1',
+    pocName: 'Krishna',
 
 
-/*
- * ========================================================
- * PROJECT CONFIGURATION
- * ========================================================
- */
+    awsCredentials: 'aws-erp',
 
-projectName: 'erp',
+    gitCredentials: 'erp-github',
 
-pocName: 'Krishna',
+    dockerCredentials: 'docker-hub',
+
+    appEc2Credentials: 'erp-app-ec2',
 
 
-/*
- * ========================================================
- * APPLICATION SOURCE REPOSITORY
- * ========================================================
- */
-
-applicationRepo: 'https://github.com/krishna-stackly/ERP.git',
-
-gitCredentials: 'github-erp',
+    applicationRepo: 'https://github.com/krishna-stackly/ERP.git',
 
 
-/*
- * ========================================================
- * AWS CREDENTIALS
- * ========================================================
- */
+    environments: [
 
-awsCredentials: 'aws-erp',
+        'Dev': 'dev',
 
+        'QA': 'qa'
 
-/*
- * ========================================================
- * DOCKER HUB CONFIGURATION
- * ========================================================
- */
+    ]
 
-dockerCredentials: 'dockerhub-credentials',
-
-dockerRegistry: 'indiadelhi001',
-
-
-/*
- * ========================================================
- * DEPLOYMENT ENVIRONMENTS
- *
- * Jenkins parameter value -> AWS tag value
- * ========================================================
- */
-
-environments: [
-
-    'dev': 'dev',
-    'qa' : 'qa'
-]  
 )
