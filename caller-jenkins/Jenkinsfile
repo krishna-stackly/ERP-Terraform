@@ -1,29 +1,21 @@
-/*
- * ============================================================
- * LOAD SHARED LIBRARY
- *
- * Always use the main branch of the shared library.
- * ============================================================
- */
-
 @Library('erp-shared-library@main') _
 
-
 /*
- * ============================================================
- * BRANCH VALIDATION
- *
- * Execute this deployment pipeline only when running
- * from the main branch.
- * ============================================================
- */
+
+* ============================================================
+* BRANCH VALIDATION
+* ============================================================
+  */
 
 if (env.BRANCH_NAME != 'main') {
 
-    echo """
+
+echo """
+
+
 ==================================================
 PIPELINE NOT EXECUTED
-==================================================
+=====================
 
 Current Branch : ${env.BRANCH_NAME}
 Allowed Branch : main
@@ -33,90 +25,87 @@ This deployment pipeline runs only from the main branch.
 ==================================================
 """
 
-    currentBuild.result = 'NOT_BUILT'
 
-    return
+currentBuild.result = 'NOT_BUILT'
+return
+
+
 }
 
-
 /*
- * ============================================================
- * CALL ERP SHARED PIPELINE
- *
- * VERSION and ENVIRONMENT are created inside the
- * shared library as Jenkins parameters.
- * ============================================================
- */
+
+* ============================================================
+* CALL ERP SHARED PIPELINE
+* ============================================================
+  */
 
 erpPipeline(
 
-    /*
-     * ========================================================
-     * AWS CONFIGURATION
-     * ========================================================
-     */
 
-    accountId: '699975678958',
+/*
+ * ========================================================
+ * AWS CONFIGURATION
+ * ========================================================
+ */
 
-    awsRegion: 'us-east-1',
+accountId: '699975678958',
 
-
-    /*
-     * ========================================================
-     * PROJECT CONFIGURATION
-     *
-     * These values must match the EC2 resource tags.
-     * ========================================================
-     */
-
-    projectName: 'erp',
-
-    pocName: 'Krishna',
+awsRegion: 'us-east-1',
 
 
-    /*
-     * ========================================================
-     * JENKINS AGENT
-     * ========================================================
-     */
+/*
+ * ========================================================
+ * PROJECT CONFIGURATION
+ * ========================================================
+ */
 
-    agentLabel: 'jenkins-agent-007',
+projectName: 'erp',
 
-
-    /*
-     * ========================================================
-     * AWS CREDENTIALS
-     *
-     * Jenkins Credential ID.
-     * ========================================================
-     */
-
-    awsCredentials: 'aws-erp',
+pocName: 'Krishna',
 
 
-    /*
-     * ========================================================
-     * DEPLOYMENT ENVIRONMENTS
-     *
-     * Jenkins displays:
-     *
-     * Dev
-     * QA
-     *
-     * The shared library converts these to lowercase
-     * when querying AWS tags:
-     *
-     * Dev -> dev
-     * QA  -> qa
-     * ========================================================
-     */
+/*
+ * ========================================================
+ * APPLICATION SOURCE REPOSITORY
+ * ========================================================
+ */
 
-    environments: [
+applicationRepo: 'https://github.com/krishna-stackly/ERP.git',
 
-        'Dev': 'Dev',
+gitCredentials: 'github-erp',
 
-        'QA': 'QA'
 
-    ]
+/*
+ * ========================================================
+ * AWS CREDENTIALS
+ * ========================================================
+ */
 
+awsCredentials: 'aws-erp',
+
+
+/*
+ * ========================================================
+ * DOCKER HUB CONFIGURATION
+ * ========================================================
+ */
+
+dockerCredentials: 'dockerhub-credentials',
+
+dockerRegistry: 'indiadelhi001',
+
+
+/*
+ * ========================================================
+ * DEPLOYMENT ENVIRONMENTS
+ *
+ * Jenkins parameter value -> AWS tag value
+ * ========================================================
+ */
+
+environments: [
+
+    'dev': 'dev',
+    'qa' : 'qa'
+]
 )
