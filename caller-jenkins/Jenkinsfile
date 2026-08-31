@@ -1,6 +1,5 @@
 @Library('erp-shared-library@main') _
 
-
 if (env.BRANCH_NAME != 'main') {
 
     echo """
@@ -15,7 +14,6 @@ Allowed Branch : main
 """
 
     currentBuild.result = 'NOT_BUILT'
-
     return
 }
 
@@ -30,25 +28,20 @@ erpPipeline(
 
     pocName: 'Krishna',
 
-
     awsCredentials: 'aws-erp',
 
-    gitCredentials: 'erp-github',
+    gitCredentials: 'github-erp',
 
-    dockerCredentials: 'docker-hub',
+    dockerCredentials: 'dockerhub-credentials',
 
     appEc2Credentials: 'erp-app-ec2',
 
-
     applicationRepo: 'https://github.com/krishna-stackly/ERP.git',
-
 
     environments: [
 
         'Dev': 'dev',
 
         'QA': 'qa'
-
     ]
-
 )
