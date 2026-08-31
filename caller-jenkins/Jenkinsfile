@@ -107,5 +107,5 @@ environments: [
 
     'dev': 'dev',
     'qa' : 'qa'
-]
+]  
 )
