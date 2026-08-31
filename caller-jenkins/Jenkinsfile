@@ -14,6 +14,7 @@ Allowed Branch : main
 """
 
     currentBuild.result = 'NOT_BUILT'
+
     return
 }
 
@@ -34,14 +35,17 @@ erpPipeline(
 
     dockerCredentials: 'dockerhub-credentials',
 
+    dockerRegistry: 'indiadelhi001',
+
     appEc2Credentials: 'erp-app-ec2',
 
     applicationRepo: 'https://github.com/krishna-stackly/ERP.git',
 
     environments: [
 
-        'Dev': 'dev',
+        'dev': 'dev',
 
-        'QA': 'qa'
+        'qa': 'qa'
+
     ]
 )
