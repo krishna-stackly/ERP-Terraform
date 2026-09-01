@@ -1,51 +1,35 @@
 @Library('erp-shared-library@main') _
 
-if (env.BRANCH_NAME != 'main') {
-
-    echo """
-==================================================
-PIPELINE NOT EXECUTED
-==================================================
-
-Current Branch : ${env.BRANCH_NAME}
-Allowed Branch : main
-
-==================================================
-"""
-
-    currentBuild.result = 'NOT_BUILT'
-
-    return
-}
-
-
 erpPipeline(
 
-    accountId: '699975678958',
 
-    awsRegion: 'us-east-1',
+accountId: '699975678958',
 
-    projectName: 'erp',
+awsRegion: 'us-east-1',
 
-    pocName: 'Krishna',
+projectName: 'erp',
 
-    awsCredentials: 'aws-erp',
+pocName: 'Krishna',
 
-    gitCredentials: 'github-erp',
+awsCredentials: 'aws-erp',
 
-    dockerCredentials: 'dockerhub-credentials',
+gitCredentials: 'github-erp',
 
-    dockerRegistry: 'indiadelhi001',
+dockerCredentials: 'dockerhub-credentials',
 
-    appEc2Credentials: 'erp-app-ec2',
+dockerRegistry: 'indiadelhi001',
 
-    applicationRepo: 'https://github.com/krishna-stackly/ERP.git',
+appEc2Credentials: 'erp-app-ec2',
 
-    environments: [
+applicationRepo: 'https://github.com/krishna-stackly/ERP.git',
 
-        'dev': 'dev',
+environments: [
 
-        'qa': 'qa'
+    'dev': 'dev',
 
-    ]
+    'qa': 'qa'
+
+]
+
+
 )
