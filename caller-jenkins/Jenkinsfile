@@ -1,29 +1,33 @@
 @Library('erp-shared-library@main') _
 
+if (env.BRANCH_NAME != 'main') {
+
+    echo """
+==================================================
+PIPELINE NOT EXECUTED
+==================================================
+
+Current Branch : ${env.BRANCH_NAME}
+Allowed Branch : main
+
+This deployment pipeline runs only from the main branch.
+
+==================================================
+"""
+
+    currentBuild.result = 'NOT_BUILT'
+    return
+}
 
 erpPipeline(
-
-    /*
-     * AWS CONFIGURATION
-     */
 
     accountId: '699975678958',
 
     awsRegion: 'us-east-1',
 
-
-    /*
-     * PROJECT CONFIGURATION
-     */
-
     projectName: 'erp',
 
     pocName: 'Krishna',
-
-
-    /*
-     * JENKINS CREDENTIAL IDs
-     */
 
     awsCredentials: 'aws-erp',
 
@@ -31,36 +35,14 @@ erpPipeline(
 
     dockerCredentials: 'dockerhub-credentials',
 
-    appEc2Credentials: 'erp-app-ec2',
-
-
-    /*
-     * DOCKER CONFIGURATION
-     */
-
     dockerRegistry: 'indiadelhi001',
 
-
-    /*
-     * APPLICATION REPOSITORY
-     */
+    appEc2Credentials: 'erp-app-ec2',
 
     applicationRepo: 'https://github.com/krishna-stackly/ERP.git',
 
-
-    /*
-     * ENVIRONMENT MAPPING
-     *
-     * Left side  = Jenkins parameter
-     * Right side = Actual AWS EC2 tag value
-     */
-
     environments: [
-
         'dev': 'dev',
-
-        'qa': 'qa'
-
+        'qa' : 'qa'
     ]
-
 )
