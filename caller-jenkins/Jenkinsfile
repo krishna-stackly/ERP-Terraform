@@ -1,35 +1,66 @@
 @Library('erp-shared-library@main') _
 
+
 erpPipeline(
 
+    /*
+     * AWS CONFIGURATION
+     */
 
-accountId: '699975678958',
+    accountId: '699975678958',
 
-awsRegion: 'us-east-1',
+    awsRegion: 'us-east-1',
 
-projectName: 'erp',
 
-pocName: 'Krishna',
+    /*
+     * PROJECT CONFIGURATION
+     */
 
-awsCredentials: 'aws-erp',
+    projectName: 'erp',
 
-gitCredentials: 'github-erp',
+    pocName: 'Krishna',
 
-dockerCredentials: 'dockerhub-credentials',
 
-dockerRegistry: 'indiadelhi001',
+    /*
+     * JENKINS CREDENTIAL IDs
+     */
 
-appEc2Credentials: 'erp-app-ec2',
+    awsCredentials: 'aws-erp',
 
-applicationRepo: 'https://github.com/krishna-stackly/ERP.git',
+    gitCredentials: 'github-erp',
 
-environments: [
+    dockerCredentials: 'dockerhub-credentials',
 
-    'dev': 'dev',
+    appEc2Credentials: 'erp-app-ec2',
 
-    'qa': 'qa'
 
-]
+    /*
+     * DOCKER CONFIGURATION
+     */
 
+    dockerRegistry: 'indiadelhi001',
+
+
+    /*
+     * APPLICATION REPOSITORY
+     */
+
+    applicationRepo: 'https://github.com/krishna-stackly/ERP.git',
+
+
+    /*
+     * ENVIRONMENT MAPPING
+     *
+     * Left side  = Jenkins parameter
+     * Right side = Actual AWS EC2 tag value
+     */
+
+    environments: [
+
+        'dev': 'dev',
+
+        'qa': 'qa'
+
+    ]
 
 )
